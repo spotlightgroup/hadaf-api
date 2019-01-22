@@ -20,6 +20,22 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'description', 'subcategories')
 
 
+class ContactSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Contact
+        fields = ('address1', 'address2', 'email1', 'email2',
+                  'phone1', 'phone2', 'fax', 'zipCode', 'city', 'country')
+
+
+class CompanySerializer(serializers.ModelSerializer):
+    contact = ContactSerializer()
+
+    class Meta:
+        model = Company
+        fields = ('name', 'description', 'code', 'type', 'contact')
+
+
 # the subcategory model serializer
 class SubcategorySerializer(serializers.ModelSerializer):
     category = CategorySerializer()
@@ -31,23 +47,10 @@ class SubcategorySerializer(serializers.ModelSerializer):
 
 # the subcategory model serializer
 class ProductSerializer(serializers.ModelSerializer):
+    subcategory = SubcategorySerializer()
+    company = CompanySerializer()
 
     class Meta:
         model = Product
         fields = ('name', 'description', 'unit', 'quantity',
                   'price', 'priority', 'subcategory', 'company')
-
-
-class ContactSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Contact
-        fields = ('address1', 'address2', 'email1', 'email2',
-                  'phone1', 'phone2', 'fax', 'zipCode', 'city', 'country')
-
-
-class CompanySerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Company
-        fields = ('name', 'description', 'code', 'type', 'contact')
