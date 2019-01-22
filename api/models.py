@@ -27,6 +27,20 @@ class Subcategory(models.Model):
         return self.name
 
 
+# company model
+class Company(models.Model):
+    class Meta:
+        verbose_name_plural = 'companies'
+
+    name = models.CharField(max_length=20)
+    type = models.CharField(max_length=20)
+    code = models.CharField(max_length=20)
+    description = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
+
 # product model
 class Product(models.Model):
     class Meta:
@@ -40,6 +54,8 @@ class Product(models.Model):
     priority = models.IntegerField()
     subcategory = models.ForeignKey(
         Subcategory, on_delete=models.CASCADE, default=1, related_name='subcategories')
+    company = models.ForeignKey(
+        Company, on_delete=models.CASCADE, default=1, related_name='companies')
 
     def __str__(self):
         return self.name
