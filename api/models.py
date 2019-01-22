@@ -74,9 +74,9 @@ class Product(models.Model):
     price = models.IntegerField()
     priority = models.IntegerField()
     subcategory = models.ForeignKey(
-        Subcategory, on_delete=models.CASCADE, default=1, related_name='subcategories')
+        Subcategory, on_delete=models.CASCADE, default=1, related_name='products')
     company = models.ForeignKey(
-        Company, on_delete=models.CASCADE, default=1, related_name='companies')
+        Company, on_delete=models.CASCADE, default=1, related_name='product')
 
     def __str__(self):
         return self.name
@@ -84,9 +84,9 @@ class Product(models.Model):
 
 # product image model
 class ProductImg(models.Model):
-    url = models.ImageField(upload_to="imgs/produts")
+    url = models.ImageField(upload_to="imgs/products")
     product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, default=1, related_name='product')
+        Product, on_delete=models.CASCADE, default=1, related_name='productImgs')
 
     def __str__(self):
         return self.url.url
