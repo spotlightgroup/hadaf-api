@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from api.models import Category, Subcategory
+from api.models import Category, Subcategory, Product
 
 """ Serializers define the API representation."""
 
@@ -27,3 +27,12 @@ class SubcategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Subcategory
         fields = ('id', 'name', 'description', 'category')
+
+
+# the subcategory model serializer
+class ProductSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Product
+        fields = ('name', 'description', 'unit', 'quantity',
+                  'price', 'priority', 'subcategory')
