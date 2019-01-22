@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from api.models import Category, Subcategory, Product, Company, Contact, ProductImg
+from api.models import Category, Subcategory, Product, Company, Contact, ProductImg, Order
 
 """ Serializers define the API representation."""
 
@@ -10,7 +10,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'is_staff')
+        fields = ('id', 'url', 'username', 'email', 'is_staff')
 
 
 # the category model serializer
@@ -24,7 +24,7 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Contact
-        fields = ('address1', 'address2', 'email1', 'email2',
+        fields = ('id', 'address1', 'address2', 'email1', 'email2',
                   'phone1', 'phone2', 'fax', 'zipCode', 'city', 'country')
 
 
@@ -33,7 +33,7 @@ class CompanySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Company
-        fields = ('name', 'description', 'code', 'type', 'contact')
+        fields = ('id', 'name', 'description', 'code', 'type', 'contact')
 
 
 # the subcategory model serializer
@@ -60,5 +60,14 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('name', 'description', 'unit', 'quantity',
+        fields = ('id', 'name', 'description', 'unit', 'quantity',
                   'price', 'priority', 'subcategory', 'company', 'productImgs')
+
+
+# the order model serializer
+class OrderSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Order
+        fields = (
+            'id', 'email', 'description', 'quantity', 'product', 'user')

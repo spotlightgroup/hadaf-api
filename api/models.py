@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # category model
@@ -90,3 +91,20 @@ class ProductImg(models.Model):
 
     def __str__(self):
         return self.url.url
+
+
+# order model
+class Order(models.Model):
+    class Meta:
+        verbose_name_plural = 'orders'
+
+    email = models.CharField(max_length=50)
+    description = models.CharField(max_length=200)
+    quantity = models.IntegerField()
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, default=1, related_name='orders')
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, default=1, related_name='orders')
+
+    def __str__(self):
+        return self.product.name
