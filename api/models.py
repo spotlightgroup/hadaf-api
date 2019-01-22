@@ -80,3 +80,13 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# product image model
+class ProductImg(models.Model):
+    url = models.ImageField(upload_to="imgs/produts")
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, default=1, related_name='product')
+
+    def __str__(self):
+        return self.url.url
