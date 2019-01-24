@@ -1,8 +1,16 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from api.models import Category, Subcategory, Product, Company, Contact, ProductImg, Order
+from api.models import Category, Subcategory, Product, Company, Contact, ProductImg, Order, Language
 
 """ Serializers define the API representation."""
+
+
+# the language model serializer
+class LanguageSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Language
+        fields = ('id', 'code')
 
 
 # the user model serializer

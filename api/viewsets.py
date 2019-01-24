@@ -1,7 +1,12 @@
 from rest_framework import routers, viewsets
 from django.contrib.auth.models import User
-from api.models import Category, Subcategory, Product, ProductImg, Company, Contact, Order
-from api.serializers import UserSerializer, CategorySerializer, SubcategorySerializer, ProductSerializer, CompanySerializer, ContactSerializer, ProductImgSerializer, OrderSerializer
+from api.models import Category, Subcategory, Product, ProductImg, Company, Contact, Order, Language
+from api.serializers import LanguageSerializer, UserSerializer, CategorySerializer, SubcategorySerializer, ProductSerializer, CompanySerializer, ContactSerializer, ProductImgSerializer, OrderSerializer
+
+
+class LanguageViewSet(viewsets.ModelViewSet):
+    queryset = Language.objects.all()
+    serializer_class = LanguageSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -47,6 +52,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
+router.register(r'languages', LanguageViewSet)
 router.register(r'orders', OrderViewSet)
 router.register(r'companies', CompanyViewSet)
 router.register(r'contacts', ContactViewSet)
