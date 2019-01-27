@@ -10,7 +10,7 @@ class LanguageSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Language
-        fields = ('id', 'code')
+        fields = ('id', 'code', 'name')
 
 
 # the user model serializer
