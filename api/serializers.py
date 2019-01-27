@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from api.models import Category, Subcategory, Product, Company, Contact, ProductImg, Order, Language
+from api.models import Category, Subcategory, Product, Company, Contact, ProductImg, Order, Language, CategoryTranslation
 
 """ Serializers define the API representation."""
 
@@ -79,3 +79,10 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
         model = Order
         fields = (
             'id', 'email', 'description', 'quantity', 'product', 'user')
+
+
+# the category translation model serializer
+class CategoryTranslationSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = CategoryTranslation
+        fields = ('id', 'name', 'description', 'language', 'product')
