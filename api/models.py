@@ -118,3 +118,15 @@ class Order(models.Model):
 
     def __str__(self):
         return self.product.name
+
+
+# models translations ==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=----
+# category model
+class CategoryTranslation(models.Model):
+    name = models.CharField(max_length=20)
+    description = models.CharField(max_length=50)
+    language = models.ForeignKey(Language, on_delete=models.CASCADE, default=1)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, default=1)
+
+    def __str__(self):
+        return self.name
