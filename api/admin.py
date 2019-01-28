@@ -53,11 +53,20 @@ class ProductImgAdmin(admin.ModelAdmin):
     list_display = ['product', 'url']
 
 
+class ProductAdmin(admin.ModelAdmin):
+    model = Product
+    list_display = ['name', 'description', 'unit',
+                    'quantity', 'price', 'category', 'subcategory', 'company', 'priority']
+
+    def category(self, obj):
+        return obj.subcategory.category
+
+
 # Register your models here.
 admin.site.register(Language, LanguageAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Subcategory, SubcategoryAdmin)
-admin.site.register(Product)
+admin.site.register(Product, ProductAdmin)
 admin.site.register(CategoryTranslation, CategoryTranslationAdmin)
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Contact, ContactAdmin)
