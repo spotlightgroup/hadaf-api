@@ -1,5 +1,5 @@
 from django.contrib import admin
-from api.models import Category, Subcategory, Product, Company, Contact, ProductImg, CategoryTranslation, Language
+from api.models import Category, Subcategory, Product, Company, Contact, ProductImg, CategoryTranslation, Language, SubcategoryTranslation
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -24,6 +24,17 @@ class CategoryTranslationAdmin(admin.ModelAdmin):
 
     def category_name(self, obj):
         return obj.category.name
+
+
+class SubcategoryTranslationAdmin(admin.ModelAdmin):
+    model = SubcategoryTranslation
+    list_display = ['subcategory_name', 'description', 'language_code']
+
+    def language_code(self, obj):
+        return obj.language.code
+
+    def subcategory_name(self, obj):
+        return obj.subcategory.name
 
 
 class CompanyAdmin(admin.ModelAdmin):
@@ -68,6 +79,7 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Subcategory, SubcategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(CategoryTranslation, CategoryTranslationAdmin)
+admin.site.register(SubcategoryTranslation, SubcategoryTranslationAdmin)
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(ProductImg, ProductImgAdmin)

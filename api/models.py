@@ -130,3 +130,15 @@ class CategoryTranslation(models.Model):
 
     def __str__(self):
         return self.language.code
+
+
+# category model
+class SubcategoryTranslation(models.Model):
+    name = models.CharField(max_length=20)
+    description = models.CharField(max_length=50)
+    language = models.ForeignKey(Language, on_delete=models.CASCADE, default=1)
+    subcategory = models.ForeignKey(
+        Subcategory, on_delete=models.CASCADE, default=1)
+
+    def __str__(self):
+        return self.language.code
