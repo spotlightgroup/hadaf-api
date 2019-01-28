@@ -67,7 +67,7 @@ class Company(models.Model):
     code = models.CharField(max_length=20)
     description = models.CharField(max_length=200)
     contact = models.ForeignKey(
-        Contact, on_delete=models.CASCADE, default=1, related_name='contacts')
+        Contact, on_delete=models.CASCADE, default=1, related_name='company')
 
     def __str__(self):
         return self.name

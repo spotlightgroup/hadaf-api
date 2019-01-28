@@ -30,6 +30,15 @@ class CompanyAdmin(admin.ModelAdmin):
         return obj.contact.email1
 
 
+class ContactAdmin(admin.ModelAdmin):
+    model = Contact
+    list_display = ['company', 'email1', 'email2', 'phone1',
+                    'phone2', 'address1', 'address2', 'fax', 'zipCode', 'country', 'city']
+
+    def company(self, obj):
+        return Company.objects.filter(contact__id=obj.id).first()
+
+
 # Register your models here.
 admin.site.register(Language)
 admin.site.register(Category, CategoryAdmin)
@@ -37,5 +46,5 @@ admin.site.register(CategoryTranslation, CategoryTranslationAdmin)
 admin.site.register(Subcategory)
 admin.site.register(Product)
 admin.site.register(Company, CompanyAdmin)
-admin.site.register(Contact)
+admin.site.register(Contact, ContactAdmin)
 admin.site.register(ProductImg)
