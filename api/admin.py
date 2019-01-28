@@ -1,5 +1,5 @@
 from django.contrib import admin
-from api.models import Category, Subcategory, Product, Company, Contact, ProductImg, CategoryTranslation, Language, SubcategoryTranslation
+from api.models import Category, Subcategory, Product, Company, Contact, ProductImg, CategoryTranslation, Language, SubcategoryTranslation, ProductTranslation
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -21,7 +21,7 @@ class SubcategoryAdmin(admin.ModelAdmin):
 
 class CategoryTranslationAdmin(admin.ModelAdmin):
     model = CategoryTranslation
-    list_display = ['category_name', 'description', 'language_code']
+    list_display = ['category_name', 'language_code']
 
     def language_code(self, obj):
         return obj.language.code
@@ -32,7 +32,7 @@ class CategoryTranslationAdmin(admin.ModelAdmin):
 
 class SubcategoryTranslationAdmin(admin.ModelAdmin):
     model = SubcategoryTranslation
-    list_display = ['subcategory_name', 'description', 'language_code']
+    list_display = ['subcategory_name', 'language_code']
 
     def language_code(self, obj):
         return obj.language.code
@@ -77,11 +77,23 @@ class ProductAdmin(admin.ModelAdmin):
         return obj.subcategory.category
 
 
+class ProductTranslationAdmin(admin.ModelAdmin):
+    model = ProductTranslation
+    list_display = ['product_name', 'language_code']
+
+    def product_name(self, obj):
+        return obj.product.name
+
+    def language_code(self, obj):
+        return obj.language.code
+
+
 # Register your models here.
 admin.site.register(Language, LanguageAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Subcategory, SubcategoryAdmin)
 admin.site.register(Product, ProductAdmin)
+admin.site.register(ProductTranslation, ProductTranslationAdmin)
 admin.site.register(CategoryTranslation, CategoryTranslationAdmin)
 admin.site.register(SubcategoryTranslation, SubcategoryTranslationAdmin)
 admin.site.register(Company, CompanyAdmin)
