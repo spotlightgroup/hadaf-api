@@ -78,10 +78,3 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
         model = Order
         fields = (
             'id', 'email', 'description', 'quantity', 'product', 'user')
-
-
-# the category translation model serializer
-class CategoryTranslationSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = CategoryTranslation
-        fields = ('id', 'name', 'description', 'language', 'product')

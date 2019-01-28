@@ -1,7 +1,7 @@
 from rest_framework import routers, viewsets
 from django.contrib.auth.models import User
-from api.models import Category, Subcategory, Product, ProductImg, Company, Contact, Order, Language, CategoryTranslation
-from api.serializers import LanguageSerializer, UserSerializer, CategorySerializer, SubcategorySerializer, ProductSerializer, CompanySerializer, ContactSerializer, ProductImgSerializer, OrderSerializer, CategoryTranslationSerializer
+from api.models import Category, Subcategory, Product, ProductImg, Company, Contact, Order, Language
+from api.serializers import LanguageSerializer, UserSerializer, CategorySerializer, SubcategorySerializer, ProductSerializer, CompanySerializer, ContactSerializer, ProductImgSerializer, OrderSerializer
 
 
 class LanguageViewSet(viewsets.ModelViewSet):
@@ -15,11 +15,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-
-
-class CategoryTranslationViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 

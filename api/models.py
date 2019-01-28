@@ -67,7 +67,7 @@ class Company(models.Model):
     code = models.CharField(max_length=20)
     description = models.CharField(max_length=200)
     contact = models.ForeignKey(
-        Contact, on_delete=models.CASCADE, default=1, related_name='contacts')
+        Contact, on_delete=models.CASCADE, default=1, related_name='company')
 
     def __str__(self):
         return self.name
@@ -121,7 +121,7 @@ class Order(models.Model):
 
 
 # models translations ==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=----
-# category model
+# category translation model
 class CategoryTranslation(models.Model):
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=50)
@@ -129,4 +129,33 @@ class CategoryTranslation(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
-        return self.name
+        return self.language.code
+
+
+# subcategory translation model
+class SubcategoryTranslation(models.Model):
+    name = models.CharField(max_length=20)
+    description = models.CharField(max_length=50)
+    language = models.ForeignKey(Language, on_delete=models.CASCADE, default=1)
+    subcategory = models.ForeignKey(
+        Subcategory, on_delete=models.CASCADE, default=1)
+
+    def __str__(self):
+        return self.language.code
+
+
+# Product translation model
+class ProductTranslation(models.Model):
+    class Meta:
+        verbose_name_plural = 'products translations'
+
+    name = models.CharField(max_length=20)
+    description = models.CharField(max_length=200)
+    unit = models.CharField(max_length=20)
+    language = models.ForeignKey(
+        Language, on_delete=models.CASCADE, default=1)
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, default=1)
+
+    def __str__(self):
+        return self.language.code
