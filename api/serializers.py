@@ -1,8 +1,16 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from api.models import Category, Subcategory, Product, Company, Contact, ProductImg, Order
+from api.models import Category, Subcategory, Product, Company, Contact, ProductImg, Order, Language, CategoryTranslation
 
 """ Serializers define the API representation."""
+
+
+# the language model serializer
+class LanguageSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Language
+        fields = ('id', 'code', 'name')
 
 
 # the user model serializer
@@ -13,8 +21,16 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'url', 'username', 'email', 'is_staff')
 
 
+# the subcategory model serializer
+class SubcategorySerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Subcategory
+        fields = ('id', 'name', 'description')
+
+
 # the category model serializer
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = Category
         fields = ('id', 'name', 'description', 'subcategories')
@@ -34,15 +50,6 @@ class CompanySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Company
         fields = ('id', 'name', 'description', 'code', 'type', 'contact')
-
-
-# the subcategory model serializer
-class SubcategorySerializer(serializers.HyperlinkedModelSerializer):
-    category = CategorySerializer()
-
-    class Meta:
-        model = Subcategory
-        fields = ('id', 'name', 'description', 'category', 'products')
 
 
 # the product model serializer
@@ -71,3 +78,10 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
         model = Order
         fields = (
             'id', 'email', 'description', 'quantity', 'product', 'user')
+
+
+# the category translation model serializer
+class CategoryTranslationSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = CategoryTranslation
+        fields = ('id', 'name', 'description', 'language', 'product')

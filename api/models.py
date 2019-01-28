@@ -2,6 +2,16 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+# language model
+class Language(models.Model):
+
+    code = models.CharField(max_length=2)
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.code
+
+
 # category model
 class Category(models.Model):
     class Meta:
@@ -108,3 +118,15 @@ class Order(models.Model):
 
     def __str__(self):
         return self.product.name
+
+
+# models translations ==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=----
+# category model
+class CategoryTranslation(models.Model):
+    name = models.CharField(max_length=20)
+    description = models.CharField(max_length=50)
+    language = models.ForeignKey(Language, on_delete=models.CASCADE, default=1)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
+
+    def __str__(self):
+        return self.name
