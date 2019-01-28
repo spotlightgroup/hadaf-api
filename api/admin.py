@@ -85,10 +85,13 @@ class ProductImgAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     model = Product
     list_display = ['name', 'description', 'unit',
-                    'quantity', 'price', 'category', 'subcategory', 'company', 'priority']
+                    'quantity', 'price', 'category', 'subcategory', 'company', 'priority', 'available_translations']
 
     def category(self, obj):
         return obj.subcategory.category
+
+    def available_translations(self, obj):
+        return list(ProductTranslation.objects.filter(product__id=obj.id))
 
 
 class ProductTranslationAdmin(admin.ModelAdmin):
