@@ -22,12 +22,20 @@ class CategoryTranslationAdmin(admin.ModelAdmin):
         return obj.category.name
 
 
+class CompanyAdmin(admin.ModelAdmin):
+    model = Company
+    list_display = ['name', 'description', 'type', 'code', 'email']
+
+    def email(self, obj):
+        return obj.contact.email1
+
+
 # Register your models here.
 admin.site.register(Language)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(CategoryTranslation, CategoryTranslationAdmin)
 admin.site.register(Subcategory)
 admin.site.register(Product)
-admin.site.register(Company)
+admin.site.register(Company, CompanyAdmin)
 admin.site.register(Contact)
 admin.site.register(ProductImg)
