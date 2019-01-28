@@ -21,8 +21,16 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'url', 'username', 'email', 'is_staff')
 
 
+# the subcategory model serializer
+class SubcategorySerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Subcategory
+        fields = ('id', 'name', 'description')
+
+
 # the category model serializer
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = Category
         fields = ('id', 'name', 'description', 'subcategories')
@@ -42,15 +50,6 @@ class CompanySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Company
         fields = ('id', 'name', 'description', 'code', 'type', 'contact')
-
-
-# the subcategory model serializer
-class SubcategorySerializer(serializers.HyperlinkedModelSerializer):
-    category = CategorySerializer()
-
-    class Meta:
-        model = Subcategory
-        fields = ('id', 'name', 'description', 'category', 'products')
 
 
 # the product model serializer
