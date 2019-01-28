@@ -21,24 +21,38 @@ class SubcategoryAdmin(admin.ModelAdmin):
 
 class CategoryTranslationAdmin(admin.ModelAdmin):
     model = CategoryTranslation
-    list_display = ['category_name', 'language_code']
+    list_display = ['category_name', 'translated_name',
+                    'language_code', 'language_name']
 
     def language_code(self, obj):
         return obj.language.code
 
+    def language_name(self, obj):
+        return obj.language.name
+
     def category_name(self, obj):
         return obj.category.name
+
+    def translated_name(self, obj):
+        return obj.name
 
 
 class SubcategoryTranslationAdmin(admin.ModelAdmin):
     model = SubcategoryTranslation
-    list_display = ['subcategory_name', 'language_code']
+    list_display = ['subcategory_name', 'translated_name',
+                    'language_code', 'language_name']
 
     def language_code(self, obj):
         return obj.language.code
 
     def subcategory_name(self, obj):
         return obj.subcategory.name
+
+    def translated_name(self, obj):
+        return obj.name
+
+    def language_name(self, obj):
+        return obj.language.name
 
 
 class CompanyAdmin(admin.ModelAdmin):
@@ -79,13 +93,20 @@ class ProductAdmin(admin.ModelAdmin):
 
 class ProductTranslationAdmin(admin.ModelAdmin):
     model = ProductTranslation
-    list_display = ['product_name', 'language_code']
+    list_display = ['product_name', 'translated_name',
+                    'language_code', 'language_name']
 
     def product_name(self, obj):
         return obj.product.name
 
     def language_code(self, obj):
         return obj.language.code
+
+    def translated_name(self, obj):
+        return obj.name
+
+    def language_name(self, obj):
+        return obj.language.name
 
 
 # Register your models here.
