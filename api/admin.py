@@ -7,8 +7,12 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'description', 'available_translations']
 
     def available_translations(self, obj):
-        t = list(CategoryTranslation.objects.filter(category__id=obj.id))
-        return t
+        return list(CategoryTranslation.objects.filter(category__id=obj.id))
+
+
+class SubcategoryAdmin(admin.ModelAdmin):
+    model = Subcategory
+    list_display = ['name', 'description', 'category']
 
 
 class CategoryTranslationAdmin(admin.ModelAdmin):
@@ -39,12 +43,22 @@ class ContactAdmin(admin.ModelAdmin):
         return Company.objects.filter(contact__id=obj.id).first()
 
 
+class LanguageAdmin(admin.ModelAdmin):
+    model = Language
+    list_display = ['name', 'code']
+
+
+class ProductImgAdmin(admin.ModelAdmin):
+    model = ProductImg
+    list_display = ['product', 'url']
+
+
 # Register your models here.
-admin.site.register(Language)
+admin.site.register(Language, LanguageAdmin)
 admin.site.register(Category, CategoryAdmin)
-admin.site.register(CategoryTranslation, CategoryTranslationAdmin)
-admin.site.register(Subcategory)
+admin.site.register(Subcategory, SubcategoryAdmin)
 admin.site.register(Product)
+admin.site.register(CategoryTranslation, CategoryTranslationAdmin)
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Contact, ContactAdmin)
-admin.site.register(ProductImg)
+admin.site.register(ProductImg, ProductImgAdmin)
