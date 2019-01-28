@@ -12,7 +12,11 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class SubcategoryAdmin(admin.ModelAdmin):
     model = Subcategory
-    list_display = ['name', 'description', 'category']
+    list_display = ['name', 'description',
+                    'category', 'available_translations']
+
+    def available_translations(self, obj):
+        return list(SubcategoryTranslation.objects.filter(subcategory__id=obj.id))
 
 
 class CategoryTranslationAdmin(admin.ModelAdmin):
