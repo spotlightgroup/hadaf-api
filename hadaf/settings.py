@@ -14,8 +14,9 @@ SECRET_KEY = config('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['www.hadafonline.com']
+ALLOWED_HOSTS = ['www.hadafonline.com', '*']
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -29,6 +30,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'storages',
+    'corsheaders',
 
 
 ]
