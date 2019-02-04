@@ -30,12 +30,23 @@ class SubcategorySerializer(serializers.ModelSerializer):
 
 # the category model serializer
 class CategorySerializer(serializers.ModelSerializer):
-    subcategories = SubcategorySerializer(
-        many=True, read_only=True)
-
     class Meta:
         model = Category
-        fields = ('id', 'name', 'description', 'subcategories')
+        fields = ('id', 'name', 'description')
+
+
+# the category translation model serializer
+class CategoryTranslationSerializer(serializers.ModelSerializer):
+    language = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='code'
+    )
+    category = CategorySerializer()
+
+    class Meta:
+        model = CategoryTranslation
+        fields = ('category', 'name', 'language',
+                  'description')
 
 
 class ContactSerializer(serializers.ModelSerializer):
