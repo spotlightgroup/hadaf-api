@@ -2,6 +2,10 @@ from django.contrib import admin
 from api.models import Category, Subcategory, Product, Company, Contact, ProductImg, CategoryTranslation, Language, SubcategoryTranslation, ProductTranslation
 
 
+# setting the header
+admin.site.site_header = 'HadafOnline Admin Dashboard'
+
+
 class CategoryAdmin(admin.ModelAdmin):
     model = Category
     list_display = ['name', 'description', 'available_translations']
