@@ -5,7 +5,13 @@ from api import models
 admin.site.site_header = 'HadafOnline Admin Dashboard'
 
 
+class CategoryTranslationInline(admin.TabularInline):
+    model = models.CategoryTranslation
+    extra = 3
+
+
 class CategoryAdmin(admin.ModelAdmin):
+    inlines = [CategoryTranslationInline]
     model = models.Category
     list_display = ['name', 'description', 'available_translations']
 
