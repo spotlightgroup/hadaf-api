@@ -14,6 +14,7 @@ class CategoryAdmin(admin.ModelAdmin):
     inlines = [CategoryTranslationInline]
     model = models.Category
     list_display = ['name', 'description', 'available_translations']
+    search_fields = ['name', 'description']
 
     def available_translations(self, obj):
         return list(models.CategoryTranslation.objects.filter(category__id=obj.id))
@@ -29,6 +30,7 @@ class SubcategoryAdmin(admin.ModelAdmin):
     model = models.Subcategory
     list_display = ['name', 'description',
                     'category', 'available_translations']
+    search_fields = ['name', 'description']
 
     def available_translations(self, obj):
         return list(models.SubcategoryTranslation.objects.filter(subcategory__id=obj.id))
@@ -37,6 +39,7 @@ class SubcategoryAdmin(admin.ModelAdmin):
 class CompanyAdmin(admin.ModelAdmin):
     model = models.Company
     list_display = ['name', 'description', 'type', 'code', 'email']
+    search_fields = ['name', 'description', 'type', 'code']
 
     def email(self, obj):
         return obj.contact.email1
@@ -45,6 +48,7 @@ class CompanyAdmin(admin.ModelAdmin):
 class LanguageAdmin(admin.ModelAdmin):
     model = models.Language
     list_display = ['name', 'code']
+    search_fields = ['name', 'code']
 
 
 class ProductImgInline(admin.TabularInline):
@@ -62,6 +66,8 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImgInline, ProductTranslationInline]
     list_display = ['name', 'description', 'unit',
                     'quantity', 'price', 'category', 'subcategory', 'company', 'priority', 'available_translations']
+    search_fields = ['name', 'description',
+                     'quantity', 'price', 'company', 'priority']
 
     def category(self, obj):
         return obj.subcategory.category
