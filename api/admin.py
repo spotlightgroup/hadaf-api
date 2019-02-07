@@ -81,13 +81,14 @@ class LanguageAdmin(admin.ModelAdmin):
     list_display = ['name', 'code']
 
 
-class ProductImgAdmin(admin.ModelAdmin):
+class ProductImgInline(admin.TabularInline):
     model = ProductImg
-    list_display = ['product', 'url']
+    extra = 5
 
 
 class ProductAdmin(admin.ModelAdmin):
     model = Product
+    inlines = [ProductImgInline]
     list_display = ['name', 'description', 'unit',
                     'quantity', 'price', 'category', 'subcategory', 'company', 'priority', 'available_translations']
 
@@ -126,4 +127,3 @@ admin.site.register(CategoryTranslation, CategoryTranslationAdmin)
 admin.site.register(SubcategoryTranslation, SubcategoryTranslationAdmin)
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Contact, ContactAdmin)
-admin.site.register(ProductImg, ProductImgAdmin)
