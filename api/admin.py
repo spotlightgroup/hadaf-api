@@ -23,57 +23,12 @@ class SubcategoryAdmin(admin.ModelAdmin):
         return list(SubcategoryTranslation.objects.filter(subcategory__id=obj.id))
 
 
-class CategoryTranslationAdmin(admin.ModelAdmin):
-    model = CategoryTranslation
-    list_display = ['category_name', 'translated_name',
-                    'language_code', 'language_name']
-
-    def language_code(self, obj):
-        return obj.language.code
-
-    def language_name(self, obj):
-        return obj.language.name
-
-    def category_name(self, obj):
-        return obj.category.name
-
-    def translated_name(self, obj):
-        return obj.name
-
-
-class SubcategoryTranslationAdmin(admin.ModelAdmin):
-    model = SubcategoryTranslation
-    list_display = ['subcategory_name', 'translated_name',
-                    'language_code', 'language_name']
-
-    def language_code(self, obj):
-        return obj.language.code
-
-    def subcategory_name(self, obj):
-        return obj.subcategory.name
-
-    def translated_name(self, obj):
-        return obj.name
-
-    def language_name(self, obj):
-        return obj.language.name
-
-
 class CompanyAdmin(admin.ModelAdmin):
     model = Company
     list_display = ['name', 'description', 'type', 'code', 'email']
 
     def email(self, obj):
         return obj.contact.email1
-
-
-class ContactAdmin(admin.ModelAdmin):
-    model = Contact
-    list_display = ['company', 'email1', 'email2', 'phone1',
-                    'phone2', 'address1', 'address2', 'fax', 'zipCode', 'country', 'city']
-
-    def company(self, obj):
-        return Company.objects.filter(contact__id=obj.id).first()
 
 
 class LanguageAdmin(admin.ModelAdmin):
@@ -83,12 +38,17 @@ class LanguageAdmin(admin.ModelAdmin):
 
 class ProductImgInline(admin.TabularInline):
     model = ProductImg
-    extra = 5
+    extra = 3
+
+
+class ProductTranslationInline(admin.TabularInline):
+    model = ProductTranslation
+    extra = 3
 
 
 class ProductAdmin(admin.ModelAdmin):
     model = Product
-    inlines = [ProductImgInline]
+    inlines = [ProductImgInline, ProductTranslationInline]
     list_display = ['name', 'description', 'unit',
                     'quantity', 'price', 'category', 'subcategory', 'company', 'priority', 'available_translations']
 
@@ -99,31 +59,9 @@ class ProductAdmin(admin.ModelAdmin):
         return list(ProductTranslation.objects.filter(product__id=obj.id))
 
 
-class ProductTranslationAdmin(admin.ModelAdmin):
-    model = ProductTranslation
-    list_display = ['product_name', 'translated_name',
-                    'language_code', 'language_name']
-
-    def product_name(self, obj):
-        return obj.product.name
-
-    def language_code(self, obj):
-        return obj.language.code
-
-    def translated_name(self, obj):
-        return obj.name
-
-    def language_name(self, obj):
-        return obj.language.name
-
-
 # Register your models here.
 admin.site.register(Language, LanguageAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Subcategory, SubcategoryAdmin)
 admin.site.register(Product, ProductAdmin)
-admin.site.register(ProductTranslation, ProductTranslationAdmin)
-admin.site.register(CategoryTranslation, CategoryTranslationAdmin)
-admin.site.register(SubcategoryTranslation, SubcategoryTranslationAdmin)
 admin.site.register(Company, CompanyAdmin)
-admin.site.register(Contact, ContactAdmin)
