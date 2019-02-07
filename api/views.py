@@ -1,49 +1,65 @@
 from rest_framework import routers, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from django.contrib.auth.models import User
-from api.models import Category, Subcategory, Product, ProductImg, Company, Contact, Order, Language
-from api.serializers import LanguageSerializer, UserSerializer, CategorySerializer, SubcategorySerializer, ProductSerializer, CompanySerializer, ContactSerializer, ProductImgSerializer, OrderSerializer
+from api import models, serializers
 
 
 class LanguageViewSet(viewsets.ModelViewSet):
-    queryset = Language.objects.all()
-    serializer_class = LanguageSerializer
+    queryset = models.Language.objects.all()
+    serializer_class = serializers.LanguageSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UserSerializer
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+    queryset = models.Category.objects.all()
+    serializer_class = serializers.CategorySerializer
+
+    def list(self, request):
+        language = request.GET.get('lang')
+        if language is None or language.lower() == 'en':
+            categories = models.Category.objects.all()
+            serializer = serializers.CategorySerializer(
+                categories, many=True)
+            return Response(serializer.data)
+
+        else:
+            categories = models.CategoryTranslation.objects.filter(
+                language__code=language.upper())
+            serializer = serializers.CategoryTranslationSerializer(
+                categories, many=True)
+            return Response(serializer.data)
 
 
 class SubcategoryViewSet(viewsets.ModelViewSet):
-    queryset = Subcategory.objects.all()
-    serializer_class = SubcategorySerializer
+    queryset = models.Subcategory.objects.all()
+    serializer_class = serializers.SubcategorySerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    queryset = models.Product.objects.all()
+    serializer_class = serializers.ProductSerializer
 
 
 class CompanyViewSet(viewsets.ModelViewSet):
-    queryset = Company.objects.all()
-    serializer_class = CompanySerializer
+    queryset = models.Company.objects.all()
+    serializer_class = serializers.CompanySerializer
 
 
 class ContactViewSet(viewsets.ModelViewSet):
-    queryset = Contact.objects.all()
-    serializer_class = ContactSerializer
+    queryset = models.Contact.objects.all()
+    serializer_class = serializers.ContactSerializer
 
 
 class ProductImgViewSet(viewsets.ModelViewSet):
-    queryset = ProductImg.objects.all()
-    serializer_class = ProductImgSerializer
+    queryset = models.ProductImg.objects.all()
+    serializer_class = serializers.ProductImgSerializer
 
 
 class OrderViewSet(viewsets.ModelViewSet):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
+    queryset = models.Order.objects.all()
+    serializer_class = serializers.OrderSerializer

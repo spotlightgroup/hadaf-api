@@ -6,7 +6,7 @@ from api.models import Category, Subcategory, Product, Company, Contact, Product
 
 
 # the language model serializer
-class LanguageSerializer(serializers.HyperlinkedModelSerializer):
+class LanguageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Language
@@ -14,7 +14,7 @@ class LanguageSerializer(serializers.HyperlinkedModelSerializer):
 
 
 # the user model serializer
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
@@ -22,21 +22,34 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 
 # the subcategory model serializer
-class SubcategorySerializer(serializers.HyperlinkedModelSerializer):
+class SubcategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Subcategory
-        fields = ('id', 'name', 'description')
+        fields = ('id', 'name', 'description', 'category')
 
 
 # the category model serializer
-class CategorySerializer(serializers.HyperlinkedModelSerializer):
-
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('id', 'name', 'description', 'subcategories')
+        fields = ('id', 'name', 'description')
 
 
-class ContactSerializer(serializers.HyperlinkedModelSerializer):
+# the category translation model serializer
+class CategoryTranslationSerializer(serializers.ModelSerializer):
+    language = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='code'
+    )
+    category = CategorySerializer()
+
+    class Meta:
+        model = CategoryTranslation
+        fields = ('category', 'name', 'language',
+                  'description')
+
+
+class ContactSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Contact
@@ -44,7 +57,7 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
                   'phone1', 'phone2', 'fax', 'zipCode', 'city', 'country')
 
 
-class CompanySerializer(serializers.HyperlinkedModelSerializer):
+class CompanySerializer(serializers.ModelSerializer):
     contact = ContactSerializer()
 
     class Meta:
@@ -53,7 +66,7 @@ class CompanySerializer(serializers.HyperlinkedModelSerializer):
 
 
 # the product model serializer
-class ProductImgSerializer(serializers.HyperlinkedModelSerializer):
+class ProductImgSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductImg
@@ -61,7 +74,7 @@ class ProductImgSerializer(serializers.HyperlinkedModelSerializer):
 
 
 # the product model serializer
-class ProductSerializer(serializers.HyperlinkedModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
     subcategory = SubcategorySerializer()
     company = CompanySerializer()
 
@@ -72,7 +85,7 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
 
 
 # the order model serializer
-class OrderSerializer(serializers.HyperlinkedModelSerializer):
+class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
