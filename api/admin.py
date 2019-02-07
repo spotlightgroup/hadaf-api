@@ -1,30 +1,29 @@
 from django.contrib import admin
-from api.models import Category, Subcategory, Product, Company, Contact, ProductImg, CategoryTranslation, Language, SubcategoryTranslation, ProductTranslation
-
+from api import models
 
 # setting the header
 admin.site.site_header = 'HadafOnline Admin Dashboard'
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    model = Category
+    model = models.Category
     list_display = ['name', 'description', 'available_translations']
 
     def available_translations(self, obj):
-        return list(CategoryTranslation.objects.filter(category__id=obj.id))
+        return list(models.CategoryTranslation.objects.filter(category__id=obj.id))
 
 
 class SubcategoryAdmin(admin.ModelAdmin):
-    model = Subcategory
+    model = models.Subcategory
     list_display = ['name', 'description',
                     'category', 'available_translations']
 
     def available_translations(self, obj):
-        return list(SubcategoryTranslation.objects.filter(subcategory__id=obj.id))
+        return list(models.SubcategoryTranslation.objects.filter(subcategory__id=obj.id))
 
 
 class CompanyAdmin(admin.ModelAdmin):
-    model = Company
+    model = models.Company
     list_display = ['name', 'description', 'type', 'code', 'email']
 
     def email(self, obj):
@@ -32,22 +31,22 @@ class CompanyAdmin(admin.ModelAdmin):
 
 
 class LanguageAdmin(admin.ModelAdmin):
-    model = Language
+    model = models.Language
     list_display = ['name', 'code']
 
 
 class ProductImgInline(admin.TabularInline):
-    model = ProductImg
+    model = models.ProductImg
     extra = 3
 
 
 class ProductTranslationInline(admin.TabularInline):
-    model = ProductTranslation
+    model = models.ProductTranslation
     extra = 3
 
 
 class ProductAdmin(admin.ModelAdmin):
-    model = Product
+    model = models.Product
     inlines = [ProductImgInline, ProductTranslationInline]
     list_display = ['name', 'description', 'unit',
                     'quantity', 'price', 'category', 'subcategory', 'company', 'priority', 'available_translations']
@@ -56,12 +55,12 @@ class ProductAdmin(admin.ModelAdmin):
         return obj.subcategory.category
 
     def available_translations(self, obj):
-        return list(ProductTranslation.objects.filter(product__id=obj.id))
+        return list(models.ProductTranslation.objects.filter(product__id=obj.id))
 
 
 # Register your models here.
-admin.site.register(Language, LanguageAdmin)
-admin.site.register(Category, CategoryAdmin)
-admin.site.register(Subcategory, SubcategoryAdmin)
-admin.site.register(Product, ProductAdmin)
-admin.site.register(Company, CompanyAdmin)
+admin.site.register(models.Language, LanguageAdmin)
+admin.site.register(models.Category, CategoryAdmin)
+admin.site.register(models.Subcategory, SubcategoryAdmin)
+admin.site.register(models.Product, ProductAdmin)
+admin.site.register(models.Company, CompanyAdmin)
