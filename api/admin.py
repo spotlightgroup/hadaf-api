@@ -7,7 +7,7 @@ admin.site.site_header = 'HadafOnline Admin Dashboard'
 
 class CategoryTranslationInline(admin.TabularInline):
     model = models.CategoryTranslation
-    extra = 3
+    extra = 1
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -19,7 +19,13 @@ class CategoryAdmin(admin.ModelAdmin):
         return list(models.CategoryTranslation.objects.filter(category__id=obj.id))
 
 
+class SubcategoryTranslationInline(admin.TabularInline):
+    model = models.SubcategoryTranslation
+    extra = 1
+
+
 class SubcategoryAdmin(admin.ModelAdmin):
+    inlines = [SubcategoryTranslationInline]
     model = models.Subcategory
     list_display = ['name', 'description',
                     'category', 'available_translations']
@@ -43,12 +49,12 @@ class LanguageAdmin(admin.ModelAdmin):
 
 class ProductImgInline(admin.TabularInline):
     model = models.ProductImg
-    extra = 3
+    extra = 1
 
 
 class ProductTranslationInline(admin.TabularInline):
     model = models.ProductTranslation
-    extra = 3
+    extra = 1
 
 
 class ProductAdmin(admin.ModelAdmin):
